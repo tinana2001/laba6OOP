@@ -49,12 +49,24 @@ namespace laba6OOP
 
                 if (chooseShape == false)
                 {
-                    Circle circle = new Circle(e.X, e.Y, 35);
-                    circle.flag = true; //для того, чтобы при создании выделялся созданный элемент
-                    _storage.CreatItem(circle);
+                    if (e.X + 35 <= pictureBox1.Width && e.Y + 35 <= pictureBox1.Height && e.X - 35 >= (pictureBox1.Width - pictureBox1.Width) && e.Y - 35 >= (pictureBox1.Height - pictureBox1.Height))
+                    {
+                        if (NameFig == "circle")
+                        {
+                            Circle circle = new Circle(e.X, e.Y, 35);
+                            circle.flag = true;
+                            _storage.CreatItem(circle);
+                        }
+                        else if (NameFig == "square")
+                        {
+                            Square square = new Square(e.X, e.Y, 35);
+                            square.flag = true;
+                            _storage.CreatItem(square);
+                        }
+
+                    }
+
                 }
-                pictureBox1.Refresh();
-                chooseShape = false;
                 pictureBox1.Refresh();
                 chooseShape = false;
             }
@@ -108,10 +120,38 @@ namespace laba6OOP
 
         private void comboBoxShape_SelectedIndexChanged(object sender, EventArgs e)
         {
+            NameFig = comboBoxShape.Text;
         }
 
         private void comboBoxColor_SelectedIndexChanged(object sender, EventArgs e)
         {
+            for (int i = 0; i < _storage.getCount(); i++)
+            {
+                if (_storage.getObj(i).flag)
+                {
+
+                    switch (comboBoxColor.SelectedIndex)
+                    {
+                        case 0:
+                            _storage._values[i].color = Color.DeepPink;
+                            Color color = Color.DeepPink;
+
+                            break;
+                        case 1:
+                            _storage._values[i].color = Color.BlueViolet;
+                            Color color1 = Color.BlueViolet;
+
+                            break;
+                        case 2:
+                            _storage._values[i].color = Color.Black;
+                            Color color2 = Color.Black;
+                            break;
+
+                    }
+
+                }
+            }
+            pictureBox1.Refresh();
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)

@@ -38,11 +38,11 @@ namespace laba6OOP
         
         public abstract bool CheckBorder(int _x, int _y);
         public abstract void Draw(Graphics graph);  //drawing figure
-        public Color ColorChange(Color color)
+        /*public Color ColorChange(Color color)
         {
             color = new Color();
             return color;
-        }
+        }*/
         
     }
 
@@ -88,7 +88,7 @@ namespace laba6OOP
             {
                 return false;
             }
-            if (y - r <= 0)
+            if (y - r<= 0)
             {
                 return false;
             }
