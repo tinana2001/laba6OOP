@@ -46,9 +46,9 @@ namespace laba6OOP
         
     }
 
-    public class Circle :Shape
+    public class Circle : Shape
     {
-        public Circle(int x1, int y1, int r1):base(x1,y1,r1)
+        public Circle(int x1, int y1, int r1) : base(x1, y1, r1)
         {
         }
 
@@ -80,22 +80,11 @@ namespace laba6OOP
         }
         public override bool CheckBorder(int _x, int _y)
         {
-            if (x - r <= 0)
+            if ((x - r <= 0) || (x + r >= _x) || (y - r <= 0) || (y + r >= _y))
             {
                 return false;
             }
-            if (x + r >= _x)
-            {
-                return false;
-            }
-            if (y - r<= 0)
-            {
-                return false;
-            }
-            if (y + r >= _y)
-            {
-                return false;
-            }
+            else
             return true;
         }
 
@@ -137,23 +126,12 @@ namespace laba6OOP
         }
         public override bool CheckBorder(int _x, int _y)
         {
-            if (x - r <= 0)
+            if ((x - r <= 0) || (x + r >= _x) || (y - r <= 0) || (y + r >= _y))
             {
                 return false;
             }
-            if (x + r >= _x)
-            {
-                return false;
-            }
-            if (y - r <= 0)
-            {
-                return false;
-            }
-            if (y + r >= _y)
-            {
-                return false;
-            }
-            return true;
+            else
+                return true;
         }
     }
     

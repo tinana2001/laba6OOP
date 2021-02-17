@@ -39,9 +39,9 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.pictureBox1.Location = new System.Drawing.Point(-3, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(22, 49);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(620, 400);
+            this.pictureBox1.Size = new System.Drawing.Size(669, 464);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
@@ -55,7 +55,7 @@
             "Розовый",
             "Голубой",
             "Черный"});
-            this.comboBoxColor.Location = new System.Drawing.Point(648, 108);
+            this.comboBoxColor.Location = new System.Drawing.Point(697, 89);
             this.comboBoxColor.Name = "comboBoxColor";
             this.comboBoxColor.Size = new System.Drawing.Size(121, 24);
             this.comboBoxColor.TabIndex = 1;
@@ -67,7 +67,7 @@
             this.comboBoxShape.Items.AddRange(new object[] {
             "circle",
             "square"});
-            this.comboBoxShape.Location = new System.Drawing.Point(648, 66);
+            this.comboBoxShape.Location = new System.Drawing.Point(697, 49);
             this.comboBoxShape.Name = "comboBoxShape";
             this.comboBoxShape.Size = new System.Drawing.Size(121, 24);
             this.comboBoxShape.TabIndex = 2;

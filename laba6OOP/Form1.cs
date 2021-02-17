@@ -105,7 +105,66 @@ namespace laba6OOP
 
                 pictureBox1.Refresh();
             }
-            ////
+            pictureBox1.Focus();
+            for (int i = 0; i < _storage.getCount(); i++)
+            {
+
+                if (_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height)==true)
+                {
+                    int dx = 0;
+                    int dy = 0;
+                    switch (e.KeyCode)
+                    {
+                        case Keys.A: dx = -5; break;
+                        case Keys.D: dx = 5; break;
+                        case Keys.W: dy = -5; break;
+                        case Keys.S: dy = 5; break;
+                    }
+                    if (_storage._values[i].flag&&_storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height)==false)
+                    {
+                        switch (e.KeyCode)
+                        {
+                            case Keys.A: dx = 5; break;
+                            case Keys.D: dx = -5; break;
+                            case Keys.W: dy = 5; break;
+                            case Keys.S: dy = -5; break;
+                        }
+                    }
+                    _storage._values[i].Move(dx, dy);
+                    
+                }
+
+
+                if (_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height))
+                {
+                    int dr = 0;
+
+                    if (e.KeyCode == Keys.Z)
+                    {
+                        dr = 1;
+                    }
+                    else if (e.KeyCode == Keys.Q)
+                    {
+                        dr = -1;
+                    }
+                    _storage._values[i].ChangeR(dr);
+
+                    if (!_storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height))
+                    {
+                        if (e.KeyCode == Keys.Z)
+                        {
+
+                            dr = -1;
+                        }
+                        else if (e.KeyCode == Keys.Q)
+                        {
+                            dr = 1;
+                        }
+                        _storage._values[i].ChangeR(dr);
+                    }
+                    pictureBox1.Refresh();
+                }
+            }
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -114,7 +173,7 @@ namespace laba6OOP
             for (int i = 0; i < _storage.getCount(); i++)
             {
                 if (_storage._values[i] != null)
-                    _storage.getObj(i).Draw(g);
+                    _storage._values[i].Draw(g);
             }
         }
 
@@ -127,7 +186,7 @@ namespace laba6OOP
         {
             for (int i = 0; i < _storage.getCount(); i++)
             {
-                if (_storage.getObj(i).flag)
+                if (_storage._values[i].flag)
                 {
 
                     switch (comboBoxColor.SelectedIndex)
@@ -158,7 +217,6 @@ namespace laba6OOP
         {
                 CtrPress = false;
         }
-
     }
 }
 
