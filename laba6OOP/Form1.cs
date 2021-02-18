@@ -108,11 +108,11 @@ namespace laba6OOP
             pictureBox1.Focus();
             for (int i = 0; i < _storage.getCount(); i++)
             {
-
-                if (_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height)==true)
+                int dx = 0;
+                int dy = 0;
+                if (_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == true)
                 {
-                    int dx = 0;
-                    int dy = 0;
+                    
                     switch (e.KeyCode)
                     {
                         case Keys.A: dx = -5; break;
@@ -120,21 +120,21 @@ namespace laba6OOP
                         case Keys.W: dy = -5; break;
                         case Keys.S: dy = 5; break;
                     }
-                    if (_storage._values[i].flag&&_storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height)==false)
+                    _storage._values[i].Move(dx, dy); //вызываю дважды, потому что иначе работает некорректно
+                }
+                if (_storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == false)
+                {
+                    
+                    switch (e.KeyCode)
                     {
-                        switch (e.KeyCode)
-                        {
-                            case Keys.A: dx = 5; break;
-                            case Keys.D: dx = -5; break;
-                            case Keys.W: dy = 5; break;
-                            case Keys.S: dy = -5; break;
-                        }
+                        case Keys.A: dx = 5; break;
+                        case Keys.D: dx = -5; break;
+                        case Keys.W: dy = 5; break;
+                        case Keys.S: dy = -5; break;
                     }
                     _storage._values[i].Move(dx, dy);
-                    
                 }
-
-
+                
                 if (_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height))
                 {
                     int dr = 0;

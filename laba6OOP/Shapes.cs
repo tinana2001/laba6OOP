@@ -38,11 +38,7 @@ namespace laba6OOP
         
         public abstract bool CheckBorder(int _x, int _y);
         public abstract void Draw(Graphics graph);  //drawing figure
-        /*public Color ColorChange(Color color)
-        {
-            color = new Color();
-            return color;
-        }*/
+       
         
     }
 
@@ -78,7 +74,7 @@ namespace laba6OOP
             }
             graph.DrawEllipse(pen, x - r, y - r, 2 * r, 2 * r);
         }
-        public override bool CheckBorder(int _x, int _y)
+        public override bool CheckBorder(int _x, int _y) //чтобы не выходил за границы формы
         {
             if ((x - r <= 0) || (x + r >= _x) || (y - r <= 0) || (y + r >= _y))
             {
