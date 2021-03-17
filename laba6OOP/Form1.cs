@@ -7,15 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace laba6OOP
 {
     public partial class Form1 : Form
     {
         private Storage _storage = new Storage(20);
-        private bool chooseShape = false; //нужен чтобы при нажатии ctrl при попадании в фигуру новые объекты не создавались
-        bool CtrPress = false;
-        public string NameFig = "";
+        private bool chooseShape = false; 
+        private bool CtrPress = false;
+        private string NameFig = "";
         public Form1()
         {
             InitializeComponent();
@@ -28,51 +29,48 @@ namespace laba6OOP
             {
                 for (int i = 0; i < _storage.getCount(); i++)
                 {
-                    if (_storage._values[i].CheckPoint(e.X, e.Y))
+                    if (_storage._values[i].ChackHit(e.X, e.Y))
                     {
                         if (!CtrPress)
                         {
                             unselectedAll();
                         }
-                        if (_storage._values[i].flag)
-                            _storage._values[i].flag = false;
-                        else
-                            _storage._values[i].flag = true;
+                        _storage._values[i].flag = true;
                         chooseShape = true;
                     }
                     else
                     {
                         if (!CtrPress)
-                            _storage._values[i].flag = false;//чтобы выделялся жирным ТОЛЬКО первый 
+                            _storage._values[i].flag = false;
                     }
                 }
 
-                if (chooseShape == false)
-                {
-                    if (e.X + 35 <= pictureBox1.Width && e.Y + 35 <= pictureBox1.Height && e.X - 35 >= (pictureBox1.Width - pictureBox1.Width) && e.Y - 35 >= (pictureBox1.Height - pictureBox1.Height))
-                    {
-                        if (NameFig == "circle")
+                   if (chooseShape == false)
+                   {
+                       if (e.X + 35 <= pictureBox1.Width && e.Y + 35 <= pictureBox1.Height && e.X - 35 >= 0 && e.Y - 35 >= 0)
+                       {
+                           if (NameFig == "circle")
+                           {
+                                    Circle circle = new Circle(e.X, e.Y, 35);
+                                    _storage.CreatItem(circle);
+                           }
+                           else if (NameFig == "square")
+                           {
+                                    Square square = new Square(e.X, e.Y, 35);
+                                    _storage.CreatItem(square);
+                           } 
+                           else if (NameFig == "triangle")
                         {
-                            Circle circle = new Circle(e.X, e.Y, 35);
-                            circle.flag = true;
-                            _storage.CreatItem(circle);
+                            Triangle triangle = new Triangle(e.X, e.Y, 35);
+                            _storage.CreatItem(triangle);
                         }
-                        else if (NameFig == "square")
-                        {
-                            Square square = new Square(e.X, e.Y, 35);
-                            square.flag = true;
-                            _storage.CreatItem(square);
-                        }
-
                     }
 
-                }
-                pictureBox1.Refresh();
-                chooseShape = false;
+                   }
+                   pictureBox1.Invalidate();
+                   chooseShape = false;
             }
         }
-
-
         private void unselectedAll()
         {
             for (int i = 0; i < _storage.getCount(); i++)
@@ -84,14 +82,13 @@ namespace laba6OOP
             }
         }
 
-
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control)
             {
-                CtrPress = true; 
+                CtrPress = true;
             }
-           
+
             if (e.KeyCode == Keys.Delete)
             {
                 for (int i = 0; i < _storage.getCount(); ++i)
@@ -102,70 +99,45 @@ namespace laba6OOP
                         i--;
                     }
                 }
-
-                pictureBox1.Refresh();
+                pictureBox1.Invalidate();
             }
-            pictureBox1.Focus();
             for (int i = 0; i < _storage.getCount(); i++)
             {
                 int dx = 0;
                 int dy = 0;
+                int dr = 0;
                 if (_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == true)
                 {
-                    
                     switch (e.KeyCode)
                     {
-                        case Keys.A: dx = -5; break;
-                        case Keys.D: dx = 5; break;
-                        case Keys.W: dy = -5; break;
-                        case Keys.S: dy = 5; break;
+                        case Keys.A: dx = -1; break;
+                        case Keys.D: dx = 1; break;
+                        case Keys.W: dy = -1; break;
+                        case Keys.S: dy = 1; break;
+                        case Keys.Add: dr = 1; break;
+                        case Keys.Subtract: dr = -1; break;
                     }
-                    _storage._values[i].Move(dx, dy); //вызываю дважды, потому что иначе работает некорректно
                 }
-                if (_storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == false)
+                if (_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == false)
                 {
-                    
                     switch (e.KeyCode)
                     {
-                        case Keys.A: dx = 5; break;
-                        case Keys.D: dx = -5; break;
-                        case Keys.W: dy = 5; break;
-                        case Keys.S: dy = -5; break;
+                        case Keys.A: dx = 1; break;
+                        case Keys.D: dx = -1; break;
+                        case Keys.W: dy = 1; break;
+                        case Keys.S: dy = -1; break;
+                        case Keys.Add: dr = -1; break;
+                        case Keys.Subtract: dr = 1; break;
                     }
-                    _storage._values[i].Move(dx, dy);
                 }
-                
-                if (_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height))
-                {
-                    int dr = 0;
 
-                    if (e.KeyCode == Keys.Z)
-                    {
-                        dr = 1;
-                    }
-                    else if (e.KeyCode == Keys.Q)
-                    {
-                        dr = -1;
-                    }
-                    _storage._values[i].ChangeR(dr);
-
-                    if (!_storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height))
-                    {
-                        if (e.KeyCode == Keys.Z)
-                        {
-
-                            dr = -1;
-                        }
-                        else if (e.KeyCode == Keys.Q)
-                        {
-                            dr = 1;
-                        }
-                        _storage._values[i].ChangeR(dr);
-                    }
-                    pictureBox1.Refresh();
-                }
+                _storage._values[i].Move(dx, dy);
+                _storage._values[i].ChangeR(dr);
+                pictureBox1.Invalidate();
             }
+            
         }
+
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
@@ -193,24 +165,19 @@ namespace laba6OOP
                     {
                         case 0:
                             _storage._values[i].color = Color.DeepPink;
-                            Color color = Color.DeepPink;
-
                             break;
                         case 1:
                             _storage._values[i].color = Color.BlueViolet;
-                            Color color1 = Color.BlueViolet;
-
                             break;
                         case 2:
                             _storage._values[i].color = Color.Black;
-                            Color color2 = Color.Black;
                             break;
 
                     }
 
                 }
             }
-            pictureBox1.Refresh();
+            pictureBox1.Invalidate();
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)

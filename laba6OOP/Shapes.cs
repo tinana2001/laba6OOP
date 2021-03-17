@@ -4,131 +4,187 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace laba6OOP
 {
-   
+
     public abstract class Shape
     {
-        
-        public Color color= Color.CadetBlue;
-        public int x, y, r;
+
+        public Color color = Color.Coral;
+        public int x, y, size;
+        public GraphicsPath figure;
         public bool flag = false;
 
-        public Shape(int x1, int y1, int r1)
+        public Shape(int x1, int y1, int size1)
         {
             x = x1;
             y = y1;
-            r = r1;
+            size = size1;
+            flag = true;
+            figure = new GraphicsPath();
         }
-        public virtual void Move(int dx, int dy)
+        public virtual void Move(int _x, int _y)
         {
-            x = x + dx;
-            y = y + dy;
+            x = x + _x;
+            y = y + _y;
         }
-        public virtual void ChangeR(int dr)
+        public virtual void ChangeR(int _size)
         {
-            r += dr;
-            if (r < 1)
+            size += _size;
+            if (size < 1)
             {
-                r = 1;
+                size = 1;
             }
         }
-        public abstract bool CheckPoint(int _x, int _y);
-        
-        public abstract bool CheckBorder(int _x, int _y);
-        public abstract void Draw(Graphics graph);  //drawing figure
-       
-        
+        public abstract void Draw(Graphics graph);
+        public virtual bool CheckBorder(int _x, int _y)
+        {
+            //if ((x - size <= 0) || (x + size >= _x) || (y - size <= 0) || (y + size >= _y))
+            if((figure.GetBounds().X<=0) || (figure.GetBounds().X + figure.GetBounds().Width >= _x)||(figure.GetBounds().Y<=0)||(figure.GetBounds().Y+figure.GetBounds().Height>=_y))
+            {
+                return false;
+            }
+            else
+                return true;
+        }
+        public virtual bool ChackHit(int _x, int _y)
+        {
+            if (figure.IsVisible(_x, _y))//isVisible-определяет, содержится ли данная точка в объекте graphicsPath
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 
     public class Circle : Shape
     {
-        public Circle(int x1, int y1, int r1) : base(x1, y1, r1)
+        public Circle(int x1, int y1, int size1) : base(x1, y1, size1)
         {
         }
 
-        public override bool CheckPoint(int x, int y)
-        {
-            if (((this.x - x) * (this.x - x) + (this.y - y) * (this.y - y)) <= r * r)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+     
 
         public override void Draw(Graphics graph)
         {
-            Pen pen;
 
+            /*Pen pen;
             if (flag)
             {
-                pen = new Pen(color, 10);
+                pen = new Pen(color, 5);
             }
             else
             {
                 pen = new Pen(color);
             }
-            graph.DrawEllipse(pen, x - r, y - r, 2 * r, 2 * r);
-        }
-        public override bool CheckBorder(int _x, int _y) //чтобы не выходил за границы формы
-        {
-            if ((x - r <= 0) || (x + r >= _x) || (y - r <= 0) || (y + r >= _y))
+            graph.DrawEllipse(pen, x - size, y - size, 2 * size, 2 * size);*/
+            figure.Reset();
+            figure.AddEllipse(x-size/2,y-size,size,2*size);
+            Pen pen;
+            if (flag)
             {
-                return false;
+                pen = new Pen(color, 5);
+                graph.DrawPath(pen, figure);
             }
             else
-            return true;
+            {
+                pen = new Pen(color);
+                graph.DrawPath(pen, figure);
+            }
         }
-
-    
+      
     }
     public class Square : Shape
     {
-        public Square(int x1, int y1, int r1) : base(x1, y1, r1)
+        public Square(int x1, int y1, int size1) : base(x1, y1, size1)
         {
         }
 
-        public override bool CheckPoint(int x, int y)
-        {
-
-            
-            if (((this.x - x) * (this.x - x) + (this.y - y) * (this.y - y)) <= r * r)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+       
 
         public override void Draw(Graphics graph)
         {
-            Pen pen;
 
-            if (flag)
+            /*if (flag)
             {
-                pen = new Pen(color, 10);
+                pen = new Pen(color, 5);
             }
             else
             {
                 pen = new Pen(color);
             }
-            graph.DrawRectangle(pen, x - r, y - r, 2 * r, 2 * r);
-        }
-        public override bool CheckBorder(int _x, int _y)
-        {
-            if ((x - r <= 0) || (x + r >= _x) || (y - r <= 0) || (y + r >= _y))
+            graph.DrawRectangle(pen, x-size, y-size, 2*size, 2*size);*/
+            figure.Reset();
+            Point[] points =
             {
-                return false;
+            new Point(x-size,y-size/2),
+            new Point(x -size, y + size / 2),
+            new Point(x + size, y + size / 2),
+            new Point(x + size, y - size / 2),
+            };
+            figure.AddPolygon(points);
+            Pen pen;
+            if (flag)
+            {
+                pen = new Pen(color, 5);
+                graph.DrawPath(pen, figure);
             }
             else
-                return true;
+            {
+                pen = new Pen(color);
+                graph.DrawPath(pen, figure);
+            }
         }
+
+
     }
-    
+    public class Triangle : Shape
+    {
+        public Triangle(int x1, int y1, int size1) : base(x1, y1, size1)
+        {
+        }
+
+      
+
+        public override void Draw(Graphics graph)
+        {
+            /*Pen pen;
+
+            if (flag)
+            {
+                pen = new Pen(color, 5);
+            }
+            else
+            {
+                pen = new Pen(color);
+            }
+            graph.DrawPolygon(pen, new PointF[] { new PointF(x, y + size), new PointF(x + size, y - size), new PointF(x - size, y - size) });*/
+            figure.Reset();
+            Point[] points =
+            {
+            new Point(x, y + size),
+            new Point(x + size, y - size),
+            new Point(x - size, y - size),
+            };
+            figure.AddPolygon(points);
+            Pen pen;
+            if (flag)
+            {
+                pen = new Pen(color, 5);
+                graph.DrawPath(pen, figure);
+            }
+            else
+            {
+                pen = new Pen(color);
+                graph.DrawPath(pen, figure);
+            }
+        }
+       
+    }
 }

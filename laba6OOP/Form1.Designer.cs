@@ -53,7 +53,7 @@
             this.comboBoxColor.FormattingEnabled = true;
             this.comboBoxColor.Items.AddRange(new object[] {
             "Розовый",
-            "Голубой",
+            "Фиолетовый",
             "Черный"});
             this.comboBoxColor.Location = new System.Drawing.Point(697, 89);
             this.comboBoxColor.Name = "comboBoxColor";
@@ -66,7 +66,8 @@
             this.comboBoxShape.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxShape.Items.AddRange(new object[] {
             "circle",
-            "square"});
+            "square",
+            "triangle"});
             this.comboBoxShape.Location = new System.Drawing.Point(697, 49);
             this.comboBoxShape.Name = "comboBoxShape";
             this.comboBoxShape.Size = new System.Drawing.Size(121, 24);

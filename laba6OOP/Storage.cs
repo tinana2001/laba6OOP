@@ -9,7 +9,7 @@ namespace laba6OOP
     class Storage
     {
         public Shape[] _values;
-        int size;
+        int size=20;
         int count = 0;
 
         public Storage(int size)
@@ -23,14 +23,10 @@ namespace laba6OOP
         {
             return count;
         }
-
-        public Shape getObj(int i)
+        public int getSize()
         {
-            if (i < count) return _values[i];
-            return null;
+            return size;
         }
-
-
         public void DeleteItem(int index)
         {
             if (size > 0)
@@ -42,7 +38,6 @@ namespace laba6OOP
                         _values[i] = _values[i + 1];
                     }
                     count--;
-                    Array.Clear(_values, count, 1);
 
                 }
             }
