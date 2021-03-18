@@ -129,36 +129,31 @@ namespace laba6OOP
             }
             for (int i = 0; i < _storage.getCount(); i++)
             {
-                int dx = 0;
-                int dy = 0;
-                int dr = 0;
-
-                if (_storage._values[i].flag)
+                if (_storage._values[i].flag)// && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == true)
                 {
                     switch (e.KeyCode)
                     {
-                        case Keys.A:
-                            if (shape.figure.GetBounds().X > 5)
-                                dx = -5; break;
-                        case Keys.D:
-                            if (shape.figure.GetBounds().X + shape.figure.GetBounds().Width < pictureBox1.Width - 5)
-                                dx = 5; break;
-                        case Keys.W:
-                            if (shape.figure.GetBounds().Y > 5)
-                                dy = -5; break;
-                        case Keys.S:
-                            if (shape.figure.GetBounds().Y + shape.figure.GetBounds().Height < pictureBox1.Height - 5)
-                                dy = 5; break;
                         case Keys.Add:
-                            if ((shape.figure.GetBounds().X + shape.figure.GetBounds().Width < pictureBox1.Width) && (shape.figure.GetBounds().X > 0) && (shape.figure.GetBounds().Y > 0) && (shape.figure.GetBounds().Y + shape.figure.GetBounds().Height < pictureBox1.Height))
-                                dr = 5; break;
+                            _storage._values[i].ChangeSize(Keys.Add, pictureBox1.Width, pictureBox1.Height);
+                            break;
                         case Keys.Subtract:
-                            if ((shape.size1 > 5) && (shape.size2 > 5))
-                                dr = -5; break;
+                            _storage._values[i].ChangeSize(Keys.Subtract, pictureBox1.Width, pictureBox1.Height);
+                            break;
+                        case Keys.D:
+                            _storage._values[i].move(Keys.D, pictureBox1.Width, pictureBox1.Height);
+                            break;
+                        case Keys.A:
+                            _storage._values[i].move(Keys.A, pictureBox1.Width, pictureBox1.Height);
+                            break;
+                        case Keys.W:
+                            _storage._values[i].move(Keys.W, pictureBox1.Width, pictureBox1.Height);
+                            break;
+                        case Keys.S:
+                            _storage._values[i].move(Keys.S, pictureBox1.Width, pictureBox1.Height);
+                            break;
+
                     }
                 }
-                _storage._values[i].Move(dx, dy);
-                _storage._values[i].ChangeSize(dr, dr);
                 pictureBox1.Invalidate();
             }
         }
