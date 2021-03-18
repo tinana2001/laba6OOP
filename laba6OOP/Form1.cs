@@ -24,7 +24,7 @@ namespace laba6OOP
             InitializeComponent();
             KeyPreview = true;
         }
-
+        
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -47,53 +47,51 @@ namespace laba6OOP
                     }
                 }
 
-                   if (chooseShape == false)
+               if (chooseShape == false)
                    {
                     
-                        if (NameFig == "circle")
-                        {
-                            shape = new Circle(e.X, e.Y, 30, 30);
-                            _storage.CreatItem(shape);
-
-                        }
-                        else if (NameFig == "square")
-                        {
-                            shape = new Square(e.X, e.Y, 35, 20);
-                            _storage.CreatItem(shape);
-                        }
-                        else if (NameFig == "triangle")
-                        {
-                            shape = new Triangle(e.X, e.Y, 20, 35);
-                            _storage.CreatItem(shape);
-                        }
-                        else if (NameFig == "strange figure")
-                        {
-                            shape = new SF(e.X, e.Y, 35, 35);
-                            _storage.CreatItem(shape);
-                        }
+                    if (NameFig == "circle")
+                    {
+                       shape = new Circle(e.X, e.Y, 35, 35);
+                       _storage.CreatItem(shape);
+                    }
+                    if (NameFig == "square")
+                    {
+                        shape = new Square(e.X, e.Y, 35, 20);
+                        _storage.CreatItem(shape);
+                    }
+                    if (NameFig == "triangle")
+                    {
+                        shape = new Triangle(e.X, e.Y, 20, 35);
+                         _storage.CreatItem(shape);
+                    }
+                    if (NameFig == "strange figure")
+                    {
+                        shape = new SF(e.X, e.Y, 35, 35);
+                         _storage.CreatItem(shape);
+                    }
                     
                     if (e.X + shape.size1 >= pictureBox1.Width)
                     {
                         while (shape.x + shape.size1 >= pictureBox1.Width)
-                            shape.Move(-1, 0);
+                            shape.Move(-2, 0);
                     }
                     if (e.Y + shape.size2 >= pictureBox1.Height)
                     {
                         while (shape.y + shape.size2 >= pictureBox1.Height)
-                            shape.Move(0, -1);
+                            shape.Move(0, -2);
                     }
                     if (e.X - shape.size1 <= 0)
                     {
                         while (shape.x - shape.size1 <= 0)
-                            shape.Move(1, 0);
+                            shape.Move(2, 0);
                     }
                     if (e.Y - shape.size2 <= 0)
                     {
                         while (shape.y - shape.size2 <= 0)
-                            shape.Move(0, 1);
+                            shape.Move(0, 2);
                     }
-
-                }
+               }
                
                 pictureBox1.Invalidate();
                    chooseShape = false;
@@ -134,33 +132,27 @@ namespace laba6OOP
                 int dx=0;
                 int dy=0;
                 int dr=0;
-                if (_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == true)
+                if (_storage._values[i].flag) // && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == true)
                 {
                     switch (e.KeyCode)
                     {
-                        case Keys.A: dx = -1; break;
-                        case Keys.D: dx = 1; break;
+                        case Keys.A: dx = -1;  break;
+                        case Keys.D: dx = 1;  break;
                         case Keys.W: dy = -1; break;
-                        case Keys.S: dy = 1; break;
+                        case Keys.S: dy = 1;  break;
                         case Keys.Add: dr = 1; break;
                         case Keys.Subtract: dr = -1; break;
                     }
-                }
-                if (_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == false)
-                {
-                     switch (e.KeyCode)
-                     {
-                        case Keys.A: dx = 1; break;
-                         case Keys.D: dx = -1; break;
-                         case Keys.W: dy = 1; break;
-                         case Keys.S: dy = -1; break;
-                         case Keys.Add: dr = -1; break;
-                         case Keys.Subtract: dr = 1; break;
+                    if ((_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == false))
+                    {
+                        dx = -2*dx;
+                        dy = -2*dy;
+                        dr = -2*dr;
                     }
                 }
                 _storage._values[i].Move(dx, dy);
-                _storage._values[i].ChangeSize(dr);
-                pictureBox1.Refresh();
+                _storage._values[i].ChangeSize(dr,dr);
+                pictureBox1.Invalidate();
             }
         }
 
@@ -198,7 +190,6 @@ namespace laba6OOP
                         case 2:
                             _storage._values[i].color = Color.Black;
                             break;
-
                     }
 
                 }

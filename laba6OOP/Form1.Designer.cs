@@ -49,6 +49,7 @@
             // 
             // comboBoxColor
             // 
+            this.comboBoxColor.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.comboBoxColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxColor.FormattingEnabled = true;
             this.comboBoxColor.Items.AddRange(new object[] {
@@ -63,7 +64,9 @@
             // 
             // comboBoxShape
             // 
+            this.comboBoxShape.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.comboBoxShape.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxShape.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.comboBoxShape.Items.AddRange(new object[] {
             "circle",
             "square",

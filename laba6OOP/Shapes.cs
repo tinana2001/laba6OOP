@@ -28,24 +28,24 @@ namespace laba6OOP
         }
         public virtual void Move(int _x, int _y)
         {
-            {
                 x = x + _x;
                 y = y + _y;
-            }
         }
-        public virtual void ChangeSize(int _size)
+        public virtual void ChangeSize(int _size1, int _size2)
         {
-            size1 += _size;
-            if (size1 < 5)
+            size1 += _size1;
+            size2 += _size2;
+            if ((size1 < 2)||(size2<2))
             {
-                size1 = 5;
+                size1 = 2;
+                size2 = 2;
             }
         }
         public abstract void Draw(Graphics graph);
         public virtual bool CheckBorder(int _x, int _y)
         {
-            if ((x - size1 <= 1) || (x + size1 >= _x) || (y - size2 <= 1) || (y + size2 >= _y))
-            //if ((figure.GetBounds().X <= 0) || (figure.GetBounds().X + figure.GetBounds().Width >= _x) || (figure.GetBounds().Y <= 0) || (figure.GetBounds().Y + figure.GetBounds().Height >= _y))
+            //if ((x - size1 <= 1) || (x + size1 >= _x) || (y - size2 <= 1) || (y + size2 >= _y))
+            if ((figure.GetBounds().X <= 1) || (figure.GetBounds().X + figure.GetBounds().Width >= _x) || (figure.GetBounds().Y <= 1) || (figure.GetBounds().Y + figure.GetBounds().Height >= _y))
             {
                 return false;
             }
@@ -93,7 +93,6 @@ namespace laba6OOP
     {
         public Square(int x1, int y1, int size1, int size2) : base(x1, y1, size1, size2)
         {
-
         }
         public override void Draw(Graphics graph)
         {
