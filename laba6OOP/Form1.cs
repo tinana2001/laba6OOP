@@ -129,29 +129,36 @@ namespace laba6OOP
             }
             for (int i = 0; i < _storage.getCount(); i++)
             {
-                int dx=0;
-                int dy=0;
-                int dr=0;
-                if (_storage._values[i].flag) // && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == true)
+                int dx = 0;
+                int dy = 0;
+                int dr = 0;
+
+                if (_storage._values[i].flag)
                 {
                     switch (e.KeyCode)
                     {
-                        case Keys.A: dx = -1;  break;
-                        case Keys.D: dx = 1;  break;
-                        case Keys.W: dy = -1; break;
-                        case Keys.S: dy = 1;  break;
-                        case Keys.Add: dr = 1; break;
-                        case Keys.Subtract: dr = -1; break;
-                    }
-                    if ((_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == false))
-                    {
-                        dx = -2*dx;
-                        dy = -2*dy;
-                        dr = -2*dr;
+                        case Keys.A:
+                            if (shape.figure.GetBounds().X > 5)
+                                dx = -5; break;
+                        case Keys.D:
+                            if (shape.figure.GetBounds().X + shape.figure.GetBounds().Width < pictureBox1.Width - 5)
+                                dx = 5; break;
+                        case Keys.W:
+                            if (shape.figure.GetBounds().Y > 5)
+                                dy = -5; break;
+                        case Keys.S:
+                            if (shape.figure.GetBounds().Y + shape.figure.GetBounds().Height < pictureBox1.Height - 5)
+                                dy = 5; break;
+                        case Keys.Add:
+                            if ((shape.figure.GetBounds().X + shape.figure.GetBounds().Width < pictureBox1.Width) && (shape.figure.GetBounds().X > 0) && (shape.figure.GetBounds().Y > 0) && (shape.figure.GetBounds().Y + shape.figure.GetBounds().Height < pictureBox1.Height))
+                                dr = 5; break;
+                        case Keys.Subtract:
+                            if ((shape.size1 > 5) && (shape.size2 > 5))
+                                dr = -5; break;
                     }
                 }
                 _storage._values[i].Move(dx, dy);
-                _storage._values[i].ChangeSize(dr,dr);
+                _storage._values[i].ChangeSize(dr, dr);
                 pictureBox1.Invalidate();
             }
         }

@@ -35,23 +35,8 @@ namespace laba6OOP
         {
             size1 += _size1;
             size2 += _size2;
-            if ((size1 < 2)||(size2<2))
-            {
-                size1 = 2;
-                size2 = 2;
-            }
         }
         public abstract void Draw(Graphics graph);
-        public virtual bool CheckBorder(int _x, int _y)
-        {
-            //if ((x - size1 <= 1) || (x + size1 >= _x) || (y - size2 <= 1) || (y + size2 >= _y))
-            if ((figure.GetBounds().X <= 1) || (figure.GetBounds().X + figure.GetBounds().Width >= _x) || (figure.GetBounds().Y <= 1) || (figure.GetBounds().Y + figure.GetBounds().Height >= _y))
-            {
-                return false;
-            }
-            else
-                return true;
-        }
         public virtual bool ChackHit(int _x, int _y)
         {
             if (figure.IsVisible(_x, _y))//isVisible-определяет, содержится ли данная точка в объекте graphicsPath
