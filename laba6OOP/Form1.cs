@@ -16,7 +16,9 @@ namespace laba6OOP
         private Storage _storage = new Storage(20);
         private bool chooseShape = false; 
         private bool CtrPress = false;
+        public GraphicsPath figure;
         private string NameFig = "";
+        public Shape shape;
         public Form1()
         {
             InitializeComponent();
@@ -47,27 +49,53 @@ namespace laba6OOP
 
                    if (chooseShape == false)
                    {
-                       if (e.X + 35 <= pictureBox1.Width && e.Y + 35 <= pictureBox1.Height && e.X - 35 >= 0 && e.Y - 35 >= 0)
-                       {
-                           if (NameFig == "circle")
-                           {
-                                    Circle circle = new Circle(e.X, e.Y, 35);
-                                    _storage.CreatItem(circle);
-                           }
-                           else if (NameFig == "square")
-                           {
-                                    Square square = new Square(e.X, e.Y, 35);
-                                    _storage.CreatItem(square);
-                           } 
-                           else if (NameFig == "triangle")
+                    
+                        if (NameFig == "circle")
                         {
-                            Triangle triangle = new Triangle(e.X, e.Y, 35);
-                            _storage.CreatItem(triangle);
+                            shape = new Circle(e.X, e.Y, 30, 30);
+                            _storage.CreatItem(shape);
+
                         }
+                        else if (NameFig == "square")
+                        {
+                            shape = new Square(e.X, e.Y, 35, 20);
+                            _storage.CreatItem(shape);
+                        }
+                        else if (NameFig == "triangle")
+                        {
+                            shape = new Triangle(e.X, e.Y, 20, 35);
+                            _storage.CreatItem(shape);
+                        }
+                        else if (NameFig == "strange figure")
+                        {
+                            shape = new SF(e.X, e.Y, 35, 35);
+                            _storage.CreatItem(shape);
+                        }
+                    
+                    if (e.X + shape.size1 >= pictureBox1.Width)
+                    {
+                        while (shape.x + shape.size1 >= pictureBox1.Width)
+                            shape.Move(-1, 0);
+                    }
+                    if (e.Y + shape.size2 >= pictureBox1.Height)
+                    {
+                        while (shape.y + shape.size2 >= pictureBox1.Height)
+                            shape.Move(0, -1);
+                    }
+                    if (e.X - shape.size1 <= 0)
+                    {
+                        while (shape.x - shape.size1 <= 0)
+                            shape.Move(1, 0);
+                    }
+                    if (e.Y - shape.size2 <= 0)
+                    {
+                        while (shape.y - shape.size2 <= 0)
+                            shape.Move(0, 1);
                     }
 
-                   }
-                   pictureBox1.Invalidate();
+                }
+               
+                pictureBox1.Invalidate();
                    chooseShape = false;
             }
         }
@@ -103,9 +131,9 @@ namespace laba6OOP
             }
             for (int i = 0; i < _storage.getCount(); i++)
             {
-                int dx = 0;
-                int dy = 0;
-                int dr = 0;
+                int dx=0;
+                int dy=0;
+                int dr=0;
                 if (_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == true)
                 {
                     switch (e.KeyCode)
@@ -120,22 +148,20 @@ namespace laba6OOP
                 }
                 if (_storage._values[i].flag && _storage._values[i].CheckBorder(pictureBox1.Width, pictureBox1.Height) == false)
                 {
-                    switch (e.KeyCode)
-                    {
+                     switch (e.KeyCode)
+                     {
                         case Keys.A: dx = 1; break;
-                        case Keys.D: dx = -1; break;
-                        case Keys.W: dy = 1; break;
-                        case Keys.S: dy = -1; break;
-                        case Keys.Add: dr = -1; break;
-                        case Keys.Subtract: dr = 1; break;
+                         case Keys.D: dx = -1; break;
+                         case Keys.W: dy = 1; break;
+                         case Keys.S: dy = -1; break;
+                         case Keys.Add: dr = -1; break;
+                         case Keys.Subtract: dr = 1; break;
                     }
                 }
-
                 _storage._values[i].Move(dx, dy);
-                _storage._values[i].ChangeR(dr);
-                pictureBox1.Invalidate();
+                _storage._values[i].ChangeSize(dr);
+                pictureBox1.Refresh();
             }
-            
         }
 
 

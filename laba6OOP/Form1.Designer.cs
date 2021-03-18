@@ -67,7 +67,8 @@
             this.comboBoxShape.Items.AddRange(new object[] {
             "circle",
             "square",
-            "triangle"});
+            "triangle",
+            "strange figure"});
             this.comboBoxShape.Location = new System.Drawing.Point(697, 49);
             this.comboBoxShape.Name = "comboBoxShape";
             this.comboBoxShape.Size = new System.Drawing.Size(121, 24);

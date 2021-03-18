@@ -13,36 +13,39 @@ namespace laba6OOP
     {
 
         public Color color = Color.Coral;
-        public int x, y, size;
+        public int x, y, size1, size2;
         public GraphicsPath figure;
         public bool flag = false;
 
-        public Shape(int x1, int y1, int size1)
+        public Shape(int x1, int y1, int _size1, int _size2)
         {
             x = x1;
             y = y1;
-            size = size1;
+            size1 = _size1;
+            size2 = _size2;
             flag = true;
             figure = new GraphicsPath();
         }
         public virtual void Move(int _x, int _y)
         {
-            x = x + _x;
-            y = y + _y;
-        }
-        public virtual void ChangeR(int _size)
-        {
-            size += _size;
-            if (size < 1)
             {
-                size = 1;
+                x = x + _x;
+                y = y + _y;
+            }
+        }
+        public virtual void ChangeSize(int _size)
+        {
+            size1 += _size;
+            if (size1 < 5)
+            {
+                size1 = 5;
             }
         }
         public abstract void Draw(Graphics graph);
         public virtual bool CheckBorder(int _x, int _y)
         {
-            //if ((x - size <= 0) || (x + size >= _x) || (y - size <= 0) || (y + size >= _y))
-            if((figure.GetBounds().X<=0) || (figure.GetBounds().X + figure.GetBounds().Width >= _x)||(figure.GetBounds().Y<=0)||(figure.GetBounds().Y+figure.GetBounds().Height>=_y))
+            if ((x - size1 <= 1) || (x + size1 >= _x) || (y - size2 <= 1) || (y + size2 >= _y))
+            //if ((figure.GetBounds().X <= 0) || (figure.GetBounds().X + figure.GetBounds().Width >= _x) || (figure.GetBounds().Y <= 0) || (figure.GetBounds().Y + figure.GetBounds().Height >= _y))
             {
                 return false;
             }
@@ -65,31 +68,17 @@ namespace laba6OOP
 
     public class Circle : Shape
     {
-        public Circle(int x1, int y1, int size1) : base(x1, y1, size1)
+        public Circle(int x1, int y1, int size1, int size2) : base(x1, y1, size1, size2)
         {
         }
-
-     
-
         public override void Draw(Graphics graph)
         {
-
-            /*Pen pen;
-            if (flag)
-            {
-                pen = new Pen(color, 5);
-            }
-            else
-            {
-                pen = new Pen(color);
-            }
-            graph.DrawEllipse(pen, x - size, y - size, 2 * size, 2 * size);*/
             figure.Reset();
-            figure.AddEllipse(x-size/2,y-size,size,2*size);
+            figure.AddEllipse(x - size1, y - size2, 2 * size1, 2 * size2);
             Pen pen;
             if (flag)
             {
-                pen = new Pen(color, 5);
+                pen = new Pen(color, 6);
                 graph.DrawPath(pen, figure);
             }
             else
@@ -98,41 +87,29 @@ namespace laba6OOP
                 graph.DrawPath(pen, figure);
             }
         }
-      
+
     }
     public class Square : Shape
     {
-        public Square(int x1, int y1, int size1) : base(x1, y1, size1)
+        public Square(int x1, int y1, int size1, int size2) : base(x1, y1, size1, size2)
         {
+
         }
-
-       
-
         public override void Draw(Graphics graph)
         {
-
-            /*if (flag)
-            {
-                pen = new Pen(color, 5);
-            }
-            else
-            {
-                pen = new Pen(color);
-            }
-            graph.DrawRectangle(pen, x-size, y-size, 2*size, 2*size);*/
             figure.Reset();
             Point[] points =
             {
-            new Point(x-size,y-size/2),
-            new Point(x -size, y + size / 2),
-            new Point(x + size, y + size / 2),
-            new Point(x + size, y - size / 2),
+            new Point(x-size1,y-size2),
+            new Point(x -size1, y + size2 ),
+            new Point(x + size1, y + size2),
+            new Point(x + size1, y - size2),
             };
             figure.AddPolygon(points);
             Pen pen;
             if (flag)
             {
-                pen = new Pen(color, 5);
+                pen = new Pen(color, 6);
                 graph.DrawPath(pen, figure);
             }
             else
@@ -141,42 +118,26 @@ namespace laba6OOP
                 graph.DrawPath(pen, figure);
             }
         }
-
-
     }
     public class Triangle : Shape
     {
-        public Triangle(int x1, int y1, int size1) : base(x1, y1, size1)
+        public Triangle(int x1, int y1, int size1, int size2) : base(x1, y1, size1, size2)
         {
         }
-
-      
-
         public override void Draw(Graphics graph)
         {
-            /*Pen pen;
-
-            if (flag)
-            {
-                pen = new Pen(color, 5);
-            }
-            else
-            {
-                pen = new Pen(color);
-            }
-            graph.DrawPolygon(pen, new PointF[] { new PointF(x, y + size), new PointF(x + size, y - size), new PointF(x - size, y - size) });*/
             figure.Reset();
             Point[] points =
             {
-            new Point(x, y + size),
-            new Point(x + size, y - size),
-            new Point(x - size, y - size),
+            new Point(x, y + size2),
+            new Point(x + size1, y - size2),
+            new Point(x - size1, y - size2),
             };
             figure.AddPolygon(points);
             Pen pen;
             if (flag)
             {
-                pen = new Pen(color, 5);
+                pen = new Pen(color, 6);
                 graph.DrawPath(pen, figure);
             }
             else
@@ -185,6 +146,36 @@ namespace laba6OOP
                 graph.DrawPath(pen, figure);
             }
         }
-       
+
+    }
+    public class SF : Shape
+    {
+        public SF(int x1, int y1, int size1, int size2) : base(x1, y1, size1, size2)
+        {
+        }
+        public override void Draw(Graphics graph)
+        {
+            figure.Reset();
+            Point[] points =
+            {
+            new Point(x-size1, y + size2),
+            new Point(x + size1, y+  size2),
+            new Point(x - size1/2, y + size2/2),
+            new Point(x + size1, y - size2),
+            new Point(x , y - size2),
+            };
+            figure.AddPolygon(points);
+            Pen pen;
+            if (flag)
+            {
+                pen = new Pen(color, 6);
+                graph.DrawPath(pen, figure);
+            }
+            else
+            {
+                pen = new Pen(color);
+                graph.DrawPath(pen, figure);
+            }
+        }
     }
 }
